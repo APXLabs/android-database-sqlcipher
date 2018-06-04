@@ -13,6 +13,12 @@ task buildOpenSSL () {
   }
 }
 
+task copyFips(type: Copy) {
+  from 'src/main/external/insidesecure/'
+  into 'src/main/external/android-libs/'
+  include '**/*.so'
+}
+
 task buildAmalgamation () {
   doLast {
     exec {
@@ -108,8 +114,8 @@ def executeNdkBuild(outputDir, androidMkDirectory, applicationMkFile, cflags) {
     def outputDirectory = "NDK_LIBS_OUT=${outputDir}"
     def applicationFile = "NDK_APPLICATION_MK=${applicationMkFile}"
     environment("SQLCIPHER_CFLAGS", "${cflags}")
-    commandLine "/Users/ariky/Development/android-ndk-r15c/ndk-build",
-    "V=1", "NDK_DEBUG=1", "--environment-overrides", outputDirectory, 
+    commandLine "$System.env.ANDROID_NDK_ROOT/ndk-build",
+    "V=1", "--environment-overrides", outputDirectory,
     "-C", androidMkDirectory, applicationFile
   }
 }

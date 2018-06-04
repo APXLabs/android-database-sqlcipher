@@ -29,7 +29,7 @@ android {
 
   clean.dependsOn cleanNative
 
-  preBuild.dependsOn([buildOpenSSL, buildAmalgamation])
+  preBuild.dependsOn([buildAmalgamation])
 
   afterEvaluate {
     android.libraryVariants.all { variant ->

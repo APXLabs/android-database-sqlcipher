@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: init clean distclean build-openssl build publish-local-snapshot \
+.PHONY: init clean distclean build-insidesecure build publish-local-snapshot \
 	publish-local-release publish-remote-snapshot public-remote-release
 GRADLE = ./gradlew
 
@@ -14,6 +14,9 @@ distclean:
 
 build-openssl:
 	$(GRADLE) buildOpenSSL
+
+build-insidesecure:
+	$(GRADLE) copyFips
 
 build:
 	$(GRADLE) android-database-sqlcipher:bundleDebug
