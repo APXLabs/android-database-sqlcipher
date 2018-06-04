@@ -31,6 +31,9 @@
 #include "jni_exception.h"
 #include "sqlite3_exception.h"
 #include "sqlcipher_loading.h"
+extern "C" {
+#include "fl.h"
+}
 
 #define UTF16_STORAGE 0
 #define INVALID_VERSION -1
@@ -525,6 +528,10 @@ namespace sqlcipher {
     return sqlite3_release_memory(SQLITE_SOFT_HEAP_LIMIT);
   }
 
+  static jint native_checkLibraryStatus(JNIEnv* env) {
+    return FL_LibStatus();
+  }
+
   static JNINativeMethod sMethods[] =
     {
       /* name, signature, funcPtr */
@@ -542,6 +549,7 @@ namespace sqlcipher {
       {"key_mutf8", "([C)V", (void *)native_key_mutf8},
       {"key", "([B)V", (void *)native_key},
       {"rekey", "([B)V", (void *)native_rekey},
+      {"checkLibraryStatus", "()I", (void *)native_checkLibraryStatus},
     };
 
   int register_android_database_SQLiteDatabase(JNIEnv *env)
@@ -673,6 +681,5 @@ namespace sqlcipher {
       jniThrowException(env, exceptionClass, message);
     }
   }
-
 
 } // namespace sqlcipher

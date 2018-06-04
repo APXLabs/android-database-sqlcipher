@@ -16,7 +16,7 @@ build-openssl:
 	$(GRADLE) buildOpenSSL
 
 build:
-	$(GRADLE) android-database-sqlcipher:bundleRelease
+	$(GRADLE) android-database-sqlcipher:bundleDebug
 
 publish-local-snapshot:
 	@ $(collect-signing-info) \

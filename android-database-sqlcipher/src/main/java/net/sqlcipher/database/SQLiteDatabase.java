@@ -229,7 +229,13 @@ public class SQLiteDatabase extends SQLiteClosable {
      */
     public static synchronized void loadLibs (Context context, File workingDir, LibraryLoader libraryLoader) {
         libraryLoader.loadLibraries("sqlcipher");
-
+        int status = checkLibraryStatus();
+        if (status > 0) {
+            Log.d("FIPS SQLCipher", "FIPS module succesfully loaded, state: " + status);
+        } else {
+            Log.e("FIPS SQLCipher", "FIPS module not ready!! state: " + status);
+        }
+        // libraryLoader.loadLibraries("safezone-sw-fips");
         // System.loadLibrary("stlport_shared");
         // System.loadLibrary("sqlcipher_android");
         // System.loadLibrary("database_sqlcipher");
@@ -2916,4 +2922,6 @@ public class SQLiteDatabase extends SQLiteClosable {
   private native void key(byte[] key) throws SQLException;
   private native void key_mutf8(char[] key) throws SQLException;
   private native void rekey(byte[] key) throws SQLException;
+
+  private native static int checkLibraryStatus();
 }

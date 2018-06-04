@@ -122,7 +122,8 @@ MINIMUM_ANDROID_64_BIT_SDK_VERSION=$2
            ./Configure "${CONFIGURE_ARCH}" \
            -D__ANDROID_API__=${ANDROID_API_VERSION} \
            -D_FILE_OFFSET_BITS=${OFFSET_BITS} \
-           "${OPENSSL_CONFIGURE_OPTIONS}"
+           "${OPENSSL_CONFIGURE_OPTIONS}" \
+           --with-crypto-lib=libsafezone-sw-fips
 
      if [ $? -ne 0 ]; then
          echo "Error executing:./Configure ${CONFIGURE_ARCH} ${OPENSSL_CONFIGURE_OPTIONS}"
